@@ -1,18 +1,16 @@
 package main
 
 import (
-	database "github.com/adamkoro/aboutme/backend/database/mongo"
+	"github.com/adamkoro/aboutme/backend/httpd/handler"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	//server := gin.Default()
+	gin.SetMode(gin.ReleaseMode)
+	server := gin.Default()
 
-	client, ctx := database.CreteConnection(5, "dev", "dev", "localhost", 27017)
-	database.ConnectToDB(client, ctx)
-	database.PingDb(client, ctx)
-	database.DisconnectFromDb(client, ctx)
+	server.GET("/ping", handler.Ping())
+	server.GET("/pingdb", handler.TestDB())
 
-	//server.GET("/ping", handler.Ping())
-
-	//server.Run(":8080")
+	server.Run(":8080")
 }

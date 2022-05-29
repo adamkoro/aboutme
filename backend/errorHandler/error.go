@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	WarningLogger = log.New(os.Stderr, "[WARNING]: ", log.Ltime)
+	WarningLogger = log.New(os.Stderr, "[WARNING]: ", log.Ldate|log.Ltime)
 	ErrorLogger   = log.New(os.Stderr, "[ERROR]: ", log.Ldate|log.Ltime)
 )
 

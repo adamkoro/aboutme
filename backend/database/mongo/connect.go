@@ -15,7 +15,10 @@ import (
 func createClient(username string, password string, address string, port int) *mongo.Client {
 	mongoUri := fmt.Sprintf("mongodb://%s:%s@%s:%d/", username, password, address, port)
 	client, err := mongo.NewClient(options.Client().ApplyURI(mongoUri))
-	errorHandler.IsError(err)
+	errorExist := errorHandler.IsError(err)
+	if errorExist {
+		errorHandler.ErrorLogger.Println(err)
+	}
 	return client
 }
 
@@ -38,5 +41,8 @@ func CreteConnection(timeout int, username string, password string, address stri
 
 func ConnectToDB(client *mongo.Client, ctx *context.Context) {
 	err := client.Connect(*ctx)
-	errorHandler.IsFatalError(err)
+	errorExist := errorHandler.IsError(err)
+	if errorExist {
+		errorHandler.ErrorLogger.Println(err)
+	}
 }

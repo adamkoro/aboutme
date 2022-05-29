@@ -10,6 +10,9 @@ import (
 
 func PingDb(client *mongo.Client, ctx *context.Context) bool {
 	err := client.Ping(*ctx, readpref.Primary())
-	errorExist := errorHandler.IsFatalError(err)
+	errorExist := errorHandler.IsError(err)
+	if errorExist {
+		errorHandler.ErrorLogger.Println(err)
+	}
 	return errorExist
 }

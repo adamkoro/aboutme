@@ -1,21 +1,15 @@
-package errorhandler
+package errorHandler
 
-// Error handling functions
+import (
+	"log"
+	"os"
+)
 
-import "log"
-
-func IsFatalError(err error) bool {
-	if err != nil {
-		log.Fatal(err)
-		return true
-	}
-	return false
-}
+var (
+	WarningLogger = log.New(os.Stderr, "[WARNING]: ", log.Ltime)
+	ErrorLogger   = log.New(os.Stderr, "[ERROR]: ", log.Ldate|log.Ltime)
+)
 
 func IsError(err error) bool {
-	if err != nil {
-		log.Println(err)
-		return true
-	}
-	return false
+	return err != nil
 }

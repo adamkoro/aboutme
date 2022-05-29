@@ -7,8 +7,8 @@ import (
 )
 
 func Ping() gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, map[string]string{
+	return func(c *gin.Context) {
+		c.JSON(http.StatusOK, map[string]string{
 			"message": "pong",
 		})
 	}

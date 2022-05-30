@@ -3,6 +3,7 @@ package mongo
 import (
 	"context"
 	"fmt"
+	"strconv"
 	"time"
 
 	errorHandler "github.com/adamkoro/aboutme/backend/errorHandler"
@@ -12,8 +13,8 @@ import (
 
 // Connection setup functions
 
-func createConnString(username string, password string, address string, port int) string {
-	return fmt.Sprintf("mongodb://%s:%s@%s:%d/", username, password, address, port)
+func createConnString(username string, password string, address string, port string) string {
+	return fmt.Sprintf("mongodb://%s:%s@%s:%s/", username, password, address, port)
 }
 
 func createClient(connectionString string) (*mongo.Client, error) {
@@ -33,26 +34,29 @@ func setTimeout(timeout time.Duration) (context.Context, error) {
 
 // Public functions
 
-func CreateConnection(timeout int, username string, password string, address string, port int) (*mongo.Client, *context.Context, error) {
+func CreateConnection(timeout string, username string, password string, address string, port string) (*mongo.Client, *context.Context, error) {
 	connString := createConnString(username, password, address, port)
 	client, err := createClient(connString)
 	errorExist := errorHandler.IsError(err)
 	if errorExist {
-		errorHandler.ErrorLogger.Println(err)
 		return nil, nil, err
 	}
 
-	ctx, err := setTimeout(time.Duration(timeout))
+	timeOut, err := strconv.Atoi(timeout)
 	errorExist = errorHandler.IsError(err)
 	if errorExist {
-		errorHandler.ErrorLogger.Println(err)
+		return nil, nil, err
+	}
+
+	ctx, err := setTimeout(time.Duration(timeOut))
+	errorExist = errorHandler.IsError(err)
+	if errorExist {
 		return nil, nil, err
 	}
 
 	err = client.Connect(ctx)
 	errorExist = errorHandler.IsError(err)
 	if errorExist {
-		errorHandler.ErrorLogger.Println(err)
 		return nil, nil, err
 	}
 

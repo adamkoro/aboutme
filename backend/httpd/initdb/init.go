@@ -6,6 +6,7 @@ import (
 
 	database "github.com/adamkoro/aboutme/backend/database/mongo"
 	"github.com/adamkoro/aboutme/backend/errorHandler"
+	"github.com/adamkoro/aboutme/backend/httpd/env"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )
@@ -50,10 +51,9 @@ func isDbExist(client *mongo.Client, ctx *context.Context) (bool, error) {
 }
 
 func CreateConnection() (*mongo.Client, *context.Context, error) {
-	client, ctx, err := database.CreateConnection(2, "dev", "dev", "localhost", 27017)
+	client, ctx, err := database.CreateConnection(env.DatabaseTimeout, env.DatabaseUsername, env.DatabasePassword, env.DatabaseAddress, env.DatabasePort)
 	errorExist := errorHandler.IsError(err)
 	if errorExist {
-		errorHandler.ErrorLogger.Println(err)
 		return nil, nil, err
 	}
 	errorHandler.InfoLogger.Println("Connection to MongoDB is established")

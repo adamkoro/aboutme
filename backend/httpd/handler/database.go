@@ -5,12 +5,13 @@ import (
 
 	database "github.com/adamkoro/aboutme/backend/database/mongo"
 	"github.com/adamkoro/aboutme/backend/errorHandler"
+	"github.com/adamkoro/aboutme/backend/httpd/env"
 	"github.com/gin-gonic/gin"
 )
 
 func PingDb() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		client, c, err := database.CreateConnection(2, "dev", "dev", "localhost", 27017)
+		client, c, err := database.CreateConnection(env.DatabaseTimeout, env.DatabaseUsername, env.DatabasePassword, env.DatabaseAddress, env.DatabasePort)
 		errorExist := errorHandler.IsError(err)
 		if errorExist {
 			errorHandler.ErrorLogger.Println(err)

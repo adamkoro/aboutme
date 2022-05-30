@@ -1,16 +1,24 @@
 package main
 
 import (
-	"github.com/adamkoro/aboutme/backend/httpd/handler"
-	"github.com/gin-gonic/gin"
+	"github.com/adamkoro/aboutme/backend/errorHandler"
+	"github.com/adamkoro/aboutme/backend/httpd/initdb"
 )
 
 func main() {
-	gin.SetMode(gin.ReleaseMode)
-	server := gin.Default()
+	client, ctx, err := initdb.CreateConnection()
+	errorExist := errorHandler.IsError(err)
+	if errorExist {
+		errorHandler.ErrorLogger.Println(err)
+	}
+	initdb.CreateDb(client, ctx)
 
-	server.GET("/ping", handler.Ping())
-	server.GET("/pingdb", handler.TestDB())
+	//gin.SetMode(gin.ReleaseMode)
+	//server := gin.Default()
 
-	server.Run(":8080")
+	//server.GET("/ping", handler.Ping())
+	//server.GET("/pingdb", handler.PingDb())
+	//server.GET("/testdata", handler.TestData())
+
+	//server.Run(":8080")
 }

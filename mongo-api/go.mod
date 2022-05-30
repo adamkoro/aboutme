@@ -1,4 +1,4 @@
-module github.com/adamkoro/aboutme/backend
+module github.com/adamkoro/aboutme/backend/mongo-api
 
 go 1.18
 

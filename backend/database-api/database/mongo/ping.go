@@ -3,7 +3,7 @@ package mongo
 import (
 	"context"
 
-	errorHandler "github.com/adamkoro/aboutme/backend/errorHandler"
+	"github.com/adamkoro/aboutme/backend/database-api/errorHandler"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 )

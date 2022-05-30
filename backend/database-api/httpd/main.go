@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/adamkoro/aboutme/backend/httpd/env"
-	"github.com/adamkoro/aboutme/backend/httpd/handler"
-	"github.com/adamkoro/aboutme/backend/httpd/initdb"
+	"github.com/adamkoro/aboutme/backend/database-api/httpd/env"
+	"github.com/adamkoro/aboutme/backend/database-api/httpd/handler"
+	"github.com/adamkoro/aboutme/backend/database-api/httpd/initdb"
 	"github.com/gin-gonic/gin"
 )
 

@@ -27,10 +27,7 @@ func createClient(connectionString string) (*mongo.Client, error) {
 }
 
 func setTimeout(timeout time.Duration) (context.Context, error) {
-	ctx, err := context.WithTimeout(context.Background(), timeout*time.Second)
-	if err != nil {
-		errorHandler.ErrorLogger.Println(err)
-	}
+	ctx, _ := context.WithTimeout(context.Background(), timeout*time.Second)
 	return ctx, nil
 }
 

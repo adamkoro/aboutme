@@ -12,37 +12,56 @@ import (
 
 // Connection setup functions
 
-func createClient(username string, password string, address string, port int) *mongo.Client {
-	mongoUri := fmt.Sprintf("mongodb://%s:%s@%s:%d/", username, password, address, port)
-	client, err := mongo.NewClient(options.Client().ApplyURI(mongoUri))
+func createConnString(username string, password string, address string, port int) string {
+	return fmt.Sprintf("mongodb://%s:%s@%s:%d/", username, password, address, port)
+}
+
+func createClient(connectionString string) (*mongo.Client, error) {
+	client, err := mongo.NewClient(options.Client().ApplyURI(connectionString))
 	errorExist := errorHandler.IsError(err)
 	if errorExist {
 		errorHandler.ErrorLogger.Println(err)
+		return nil, err
 	}
-	return client
+	return client, nil
 }
 
-func setTimeout(timeout time.Duration) context.Context {
-	ctx, _ := context.WithTimeout(context.Background(), timeout*time.Second)
-	return ctx
+func setTimeout(timeout time.Duration) (context.Context, error) {
+	ctx, err := context.WithTimeout(context.Background(), timeout*time.Second)
+	if err != nil {
+		errorHandler.ErrorLogger.Println(err)
+	}
+	return ctx, nil
 }
 
 // Public functions
 
-func DisconnectFromDb(client *mongo.Client, ctx *context.Context) {
-	defer client.Disconnect(*ctx)
-}
-
-func CreteConnection(timeout int, username string, password string, address string, port int) (*mongo.Client, *context.Context) {
-	client := createClient(username, password, address, port)
-	ctx := setTimeout(time.Duration(timeout))
-	return client, &ctx
-}
-
-func ConnectToDB(client *mongo.Client, ctx *context.Context) {
-	err := client.Connect(*ctx)
+func CreateConnection(timeout int, username string, password string, address string, port int) (*mongo.Client, *context.Context, error) {
+	connString := createConnString(username, password, address, port)
+	client, err := createClient(connString)
 	errorExist := errorHandler.IsError(err)
 	if errorExist {
 		errorHandler.ErrorLogger.Println(err)
+		return nil, nil, err
 	}
+
+	ctx, err := setTimeout(time.Duration(timeout))
+	errorExist = errorHandler.IsError(err)
+	if errorExist {
+		errorHandler.ErrorLogger.Println(err)
+		return nil, nil, err
+	}
+
+	err = client.Connect(ctx)
+	errorExist = errorHandler.IsError(err)
+	if errorExist {
+		errorHandler.ErrorLogger.Println(err)
+		return nil, nil, err
+	}
+
+	return client, &ctx, nil
+}
+
+func DeleteConnection(client *mongo.Client, ctx *context.Context) {
+	defer client.Disconnect(*ctx)
 }

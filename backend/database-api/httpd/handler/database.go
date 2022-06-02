@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	database "github.com/adamkoro/aboutme/backend/database-api/database/mongo"
+	"github.com/adamkoro/aboutme/backend/database-api/env"
 	"github.com/adamkoro/aboutme/backend/database-api/errorHandler"
-	"github.com/adamkoro/aboutme/backend/database-api/httpd/env"
 	"github.com/gin-gonic/gin"
 )
 

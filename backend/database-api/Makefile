@@ -1,4 +1,4 @@
 dev:
-	go run httpd/main.go
+	go run main.go
 tidy:
 	go mod tidy

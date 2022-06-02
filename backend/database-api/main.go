@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/adamkoro/aboutme/backend/database-api/httpd/env"
+	"github.com/adamkoro/aboutme/backend/database-api/env"
 	"github.com/adamkoro/aboutme/backend/database-api/httpd/handler"
 	"github.com/adamkoro/aboutme/backend/database-api/httpd/initdb"
 	"github.com/gin-gonic/gin"

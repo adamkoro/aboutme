@@ -6,25 +6,72 @@ import (
 )
 
 func TestCheckDatabaseTimeout(t *testing.T) {
-	timeOut := CheckDatabaseTimeout(0)
-	if timeOut != 2 {
-		fmt.Println(timeOut)
-		t.Error("0 value is not equals default value, which is 2")
+	testData := 2
+	defaultData := CheckDatabaseTimeout(testData)
+	if defaultData != testData {
+		message := fmt.Sprintf("Testdata: %d and function return value: %d not match", testData, defaultData)
+		t.Error(message)
 	}
-	customTimeOut := 10
-	timeOut = CheckDatabaseTimeout(customTimeOut)
-	if customTimeOut != timeOut {
-		fmt.Println(timeOut)
-		message := fmt.Sprintf("Test timeout value (%d) is not equals itself", customTimeOut)
+	customData := 10
+	defaultData = CheckDatabaseTimeout(customData)
+	if defaultData != customData {
+		message := fmt.Sprintf("Customdata: %d and function return value: %d not match", customData, defaultData)
 		t.Error(message)
 	}
 }
 
 func TestCheckDatabaseName(t *testing.T) {
-	db := CheckDatabaseName("aboutme")
-	if db != "aboutme" {
-		fmt.Println(db)
-		t.Error("Default database name value (aboutme) is not setted")
+	testData := "aboutme"
+	defaultData := CheckDatabaseName(testData)
+	if defaultData != testData {
+		fmt.Println(defaultData)
+		message := fmt.Sprintf("Testdata: %s and function return value: %s not match", testData, defaultData)
+		t.Error(message)
+	}
+}
+
+func TestCheckAddress(t *testing.T) {
+	testData := "localhost"
+	defaultData := CheckDatabaseAddress(testData)
+	if defaultData != testData {
+		fmt.Println(defaultData)
+		message := fmt.Sprintf("Testdata: %s and function return value: %s not match", testData, defaultData)
+		t.Error(message)
+	}
+}
+
+func TestCheckDatabasePort(t *testing.T) {
+	testData := 27017
+	defaultData := CheckDatabasePort(testData)
+	if defaultData != testData {
+		message := fmt.Sprintf("Testdata: %d and function return value: %d not match", testData, defaultData)
+		t.Error(message)
+	}
+	customData := 27777
+	defaultData = CheckDatabaseTimeout(customData)
+	if defaultData != customData {
+		message := fmt.Sprintf("Customdata: %d and function return value: %d not match", customData, defaultData)
+		t.Error(message)
+	}
+}
+
+func TestCheckDatabaseUsername(t *testing.T) {
+	testData := "dev"
+	defaultData := CheckDatabaseUsername(testData)
+	if defaultData != testData {
+		fmt.Println(defaultData)
+		message := fmt.Sprintf("Testdata: %s and function return value: %s not match", testData, defaultData)
+		t.Error(message)
+	}
+}
+
+func TestCheckDatabasePassword(t *testing.T) {
+	testData := "dev"
+	defaultData := CheckDatabasePassword(testData)
+	if defaultData != testData {
+		fmt.Println(defaultData)
+		message := fmt.Sprintf("Testdata: %s and function return value: %s not match", testData, defaultData)
+		t.Error(message)
 	}
 }
 

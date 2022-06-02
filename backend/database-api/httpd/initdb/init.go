@@ -5,8 +5,8 @@ import (
 	"time"
 
 	database "github.com/adamkoro/aboutme/backend/database-api/database/mongo"
+	"github.com/adamkoro/aboutme/backend/database-api/env"
 	"github.com/adamkoro/aboutme/backend/database-api/errorHandler"
-	"github.com/adamkoro/aboutme/backend/database-api/httpd/env"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )

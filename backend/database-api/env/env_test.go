@@ -12,12 +12,6 @@ func TestCheckDatabaseTimeout(t *testing.T) {
 		message := fmt.Sprintf("Testdata: %d and function return value: %d not match", testData, defaultData)
 		t.Error(message)
 	}
-	customData := 10
-	defaultData = CheckDatabaseTimeout(customData)
-	if defaultData != customData {
-		message := fmt.Sprintf("Customdata: %d and function return value: %d not match", customData, defaultData)
-		t.Error(message)
-	}
 }
 
 func TestCheckDatabaseName(t *testing.T) {
@@ -45,12 +39,6 @@ func TestCheckDatabasePort(t *testing.T) {
 	defaultData := CheckDatabasePort(testData)
 	if defaultData != testData {
 		message := fmt.Sprintf("Testdata: %d and function return value: %d not match", testData, defaultData)
-		t.Error(message)
-	}
-	customData := 27777
-	defaultData = CheckDatabaseTimeout(customData)
-	if defaultData != customData {
-		message := fmt.Sprintf("Customdata: %d and function return value: %d not match", customData, defaultData)
 		t.Error(message)
 	}
 }
